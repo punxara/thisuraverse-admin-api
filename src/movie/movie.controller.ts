@@ -1,6 +1,8 @@
 import { Body, Controller, Get, Param, Patch, Post, Put } from "@nestjs/common";
 import { MovieService } from "./movie.service";
 import { MovieEntity } from "./movie.entity";
+import { RoleEntity } from "./role/role.entity";
+import { GenreEntity } from "./genre/genre.entity";
 
 @Controller("movie")
 export class MovieController {
@@ -25,8 +27,18 @@ export class MovieController {
     return await this.service.changePublicity(id, isPublic);
   }
 
-  @Get()
-  getAll(): Promise<MovieEntity[]> {
-    return this.service.getAll();
+  @Get('get-all-genres')
+  async getAllGenres(): Promise<GenreEntity[]> {
+    return await this.service.getAllGenres();
+  }
+
+  @Get('get-all-roles')
+  async getAllRoles(): Promise<RoleEntity[]> {
+    return await this.service.getAllRoles();
+  }
+
+  @Get('get-all-movies')
+  async getAllMovies(): Promise<MovieEntity[]> {
+    return await this.service.getAllMovies();
   }
 }

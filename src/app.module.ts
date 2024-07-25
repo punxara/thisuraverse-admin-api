@@ -20,7 +20,7 @@ import { GenreEntity } from "./movie/genre/genre.entity";
       database: "thisuraverse-master-db",
       entities: [MovieEntity, SocialEntity, RoleEntity, GenreEntity],
       synchronize: true,
-      logging: true
+      logging: false
     }),
     MovieModule,
     SocialModule

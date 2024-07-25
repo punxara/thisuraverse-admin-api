@@ -1,6 +1,11 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { EntityManager } from "typeorm";
 import { MovieEntity } from "./movie.entity";
+import { RoleEntity } from "./role/role.entity";
+import { GenreEntity } from "./genre/genre.entity";
+import { MovieDto } from "./dto/movie.dto";
+import { RoleDto } from "./dto/role.dto";
+import { GenreDto } from "./dto/genre.dto";
 
 @Injectable()
 export class MovieService {
@@ -9,7 +14,7 @@ export class MovieService {
     private entityManager: EntityManager,
   ) {}
 
-  async create(item: MovieEntity): Promise<MovieEntity> {
+  async create(item: MovieDto): Promise<MovieDto> {
 
     const entity: MovieEntity = new MovieEntity();
     entity.title = item.title;
@@ -24,7 +29,7 @@ export class MovieService {
     return await this.entityManager.save(entity);
   }
 
-  async update(id: number, item: MovieEntity): Promise<MovieEntity> {
+  async update(id: number, item: MovieDto): Promise<MovieDto> {
 
     const entity: MovieEntity = await this.entityManager.findOneBy(MovieEntity, { id });
     if (!entity) {
@@ -51,7 +56,7 @@ export class MovieService {
     }
   }
 
-  async changePublicity(id: number, isPublic: boolean): Promise<MovieEntity> {
+  async changePublicity(id: number, isPublic: boolean): Promise<MovieDto> {
 
     const entity: MovieEntity = await this.entityManager.findOneBy(MovieEntity, { id });
     if (!entity) {
@@ -70,7 +75,18 @@ export class MovieService {
     }
   }
 
-  async getAll(): Promise<MovieEntity[]> {
+  async getAllGenres(): Promise<GenreDto[]> {
+    return await this.entityManager.find(GenreEntity);
+  }
+
+  async getAllRoles(): Promise<RoleDto[]> {
+    let a = await this.entityManager.find(RoleEntity);
+
+    console.log(a);
+    return a;
+  }
+
+  async getAllMovies(): Promise<MovieDto[]> {
     return await this.entityManager.find(MovieEntity);
   }
 }
