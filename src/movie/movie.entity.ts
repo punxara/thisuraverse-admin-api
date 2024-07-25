@@ -1,4 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { RoleEntity } from "./role/role.entity";
+import { GenreEntity } from "./genre/genre.entity";
 
 @Entity()
 export class MovieEntity {
@@ -15,14 +17,14 @@ export class MovieEntity {
   @Column()
   tagLine: string;
 
-  @Column()
-  roles: string[];
+  @OneToMany(() => RoleEntity, (role) => role.movie)
+  roles: RoleEntity[];
 
   @Column()
   posterUrl: string;
 
-  @Column()
-  genres: string[];
+  @OneToMany(() => GenreEntity, (genre) => genre.movie)
+  genres: GenreEntity[];
 
   @Column()
   link: string;
