@@ -63,8 +63,13 @@ export class MovieService {
       throw new HttpException(`Sorry, movie doesn't exist.`, HttpStatus.BAD_REQUEST);
     }
 
-    console.log(isPublic['isPublic']);
-    // entity.isPublic = +isPublic['isPublic'];
+    console.log(+isPublic['isPublic']);
+
+    if (isPublic['isPublic'] === '0'){
+      entity.isPublic = 0;
+    } else if (isPublic['isPublic'] === '1') {
+      entity.isPublic = 1;
+    }
 
     try {
       return await this.entityManager.transaction(async transactionalEntityManager => {
