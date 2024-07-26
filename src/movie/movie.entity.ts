@@ -17,13 +17,13 @@ export class MovieEntity {
   @Column()
   tagLine: string;
 
-  @OneToMany(() => RoleEntity, (role) => role.movie)
+  @OneToMany(() => RoleEntity, (role) => role.movie, {eager: true})
   roles: RoleEntity[];
 
   @Column()
   posterUrl: string;
 
-  @OneToMany(() => GenreEntity, (genre) => genre.movie)
+  @OneToMany(() => GenreEntity, (genre) => genre.movie, {eager: true})
   genres: GenreEntity[];
 
   @Column()

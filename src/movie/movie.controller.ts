@@ -13,8 +13,8 @@ export class MovieController {
   }
 
   @Post()
-  create(@Body() item: MovieEntity): Promise<MovieEntity> {
-    return this.service.create(item);
+  async create(@Body() item: MovieEntity): Promise<MovieEntity> {
+    return await this.service.create(item);
   }
 
   @Put(":id")
@@ -25,6 +25,11 @@ export class MovieController {
   @Patch(":id")
   async changePublicity(@Param("id") id: number, @Body() isPublic: boolean): Promise<MovieEntity> {
     return await this.service.changePublicity(id, isPublic);
+  }
+
+  @Get('get-by-id/:id')
+  async get(@Param('id') id: string): Promise<MovieEntity> {
+    return await this.service.get(+id);
   }
 
   @Get('get-all-genres')
@@ -41,4 +46,6 @@ export class MovieController {
   async getAllMovies(): Promise<MovieEntity[]> {
     return await this.service.getAllMovies();
   }
+
+
 }

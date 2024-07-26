@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
+import { HttpException, HttpStatus, Injectable, Logger } from "@nestjs/common";
 import { EntityManager } from "typeorm";
 import { MovieEntity } from "./movie.entity";
 import { RoleEntity } from "./role/role.entity";
@@ -75,15 +75,16 @@ export class MovieService {
     }
   }
 
+  async get(id: number): Promise<MovieDto> {
+    return await this.entityManager.findOneBy(MovieEntity, {id: id});
+  }
+
   async getAllGenres(): Promise<GenreDto[]> {
     return await this.entityManager.find(GenreEntity);
   }
 
   async getAllRoles(): Promise<RoleDto[]> {
-    let a = await this.entityManager.find(RoleEntity);
-
-    console.log(a);
-    return a;
+    return await this.entityManager.find(RoleEntity);
   }
 
   async getAllMovies(): Promise<MovieDto[]> {

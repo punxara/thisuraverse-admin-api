@@ -10,6 +10,9 @@ export class GenreEntity {
   @Column()
   genre: string;
 
+  @Column()
+  movieId: number;
+
   @ManyToOne(() => MovieEntity, (movie) => movie.roles)
   movie: MovieEntity;
 }
