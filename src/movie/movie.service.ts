@@ -25,7 +25,7 @@ export class MovieService {
     entity.genres = item.genres;
     entity.link = item.link;
     entity.status = item.status;
-    entity.isPublic = item.isPublic;
+    entity.isPublic = true;
     return await this.entityManager.save(entity);
   }
 
