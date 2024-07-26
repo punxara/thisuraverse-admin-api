@@ -1,15 +1,15 @@
-import { RoleEntity } from "../role/role.entity";
-import { GenreEntity } from "../genre/genre.entity";
+import { Role } from "../role/role";
+import { Genre } from "../genre/genre";
 
 export class MovieDto {
   id: number;
   title: string;
   releasedAt: Date;
   tagLine: string;
-  roles: RoleEntity[];
+  roles: Role[];
   posterUrl: string;
-  genres: GenreEntity[];
+  genres: Genre[];
   link: string;
   status: "released" | "upcoming" | "to-develop";
-  isPublic: boolean;
+  isPublic: 1 | 0;
 }

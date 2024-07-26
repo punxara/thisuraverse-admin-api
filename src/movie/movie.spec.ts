@@ -1,7 +1,7 @@
-import { MovieEntity } from './movie.entity';
+import { Movie } from './movie';
 
 describe('Movie', () => {
   it('should be defined', () => {
-    expect(new MovieEntity()).toBeDefined();
+    expect(new Movie()).toBeDefined();
   });
 });

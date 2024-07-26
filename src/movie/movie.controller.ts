@@ -1,8 +1,8 @@
 import { Body, Controller, Get, Param, Patch, Post, Put } from "@nestjs/common";
 import { MovieService } from "./movie.service";
-import { MovieEntity } from "./movie.entity";
-import { RoleEntity } from "./role/role.entity";
-import { GenreEntity } from "./genre/genre.entity";
+import { Movie } from "./movie";
+import { Role } from "./role/role";
+import { Genre } from "./genre/genre";
 
 @Controller("movie")
 export class MovieController {
@@ -13,37 +13,37 @@ export class MovieController {
   }
 
   @Post()
-  async create(@Body() item: MovieEntity): Promise<MovieEntity> {
+  async create(@Body() item: Movie): Promise<Movie> {
     return await this.service.create(item);
   }
 
   @Put(":id")
-  async update(@Param("id") id: number, @Body() item: MovieEntity): Promise<MovieEntity> {
+  async update(@Param("id") id: number, @Body() item: Movie): Promise<Movie> {
     return await this.service.update(id, item);
   }
 
-  @Patch(":id")
-  async changePublicity(@Param("id") id: number, @Body() isPublic: boolean): Promise<MovieEntity> {
+  @Patch("change-publicity/:id")
+  async changePublicity(@Param("id") id: number, @Body() isPublic: 1 | 0): Promise<Movie> {
     return await this.service.changePublicity(id, isPublic);
   }
 
   @Get('get-by-id/:id')
-  async get(@Param('id') id: string): Promise<MovieEntity> {
+  async get(@Param('id') id: string): Promise<Movie> {
     return await this.service.get(+id);
   }
 
   @Get('get-all-genres')
-  async getAllGenres(): Promise<GenreEntity[]> {
+  async getAllGenres(): Promise<Genre[]> {
     return await this.service.getAllGenres();
   }
 
   @Get('get-all-roles')
-  async getAllRoles(): Promise<RoleEntity[]> {
+  async getAllRoles(): Promise<Role[]> {
     return await this.service.getAllRoles();
   }
 
   @Get('get-all-movies')
-  async getAllMovies(): Promise<MovieEntity[]> {
+  async getAllMovies(): Promise<Movie[]> {
     return await this.service.getAllMovies();
   }
 

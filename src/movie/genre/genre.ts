@@ -1,8 +1,8 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { MovieEntity } from "../movie.entity";
+import { Movie } from "../movie";
 
 @Entity()
-export class GenreEntity {
+export class Genre {
 
   @PrimaryGeneratedColumn()
   id: number;
@@ -10,9 +10,9 @@ export class GenreEntity {
   @Column()
   genre: string;
 
-  @Column()
+  @Column({nullable: true})
   movieId: number;
 
-  @ManyToOne(() => MovieEntity, (movie) => movie.roles)
-  movie: MovieEntity;
+  @ManyToOne(() => Movie, (movie) => movie.roles)
+  movie: Movie;
 }

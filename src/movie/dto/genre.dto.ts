@@ -1,8 +1,8 @@
-import { MovieEntity } from "../movie.entity";
+import { Movie } from "../movie";
 
 export class GenreDto {
   id: number;
   genre: string;
   movieId: number;
-  movie: MovieEntity;
+  movie: Movie;
 }

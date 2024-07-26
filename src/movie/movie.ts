@@ -1,9 +1,9 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { RoleEntity } from "./role/role.entity";
-import { GenreEntity } from "./genre/genre.entity";
+import { Role } from "./role/role";
+import { Genre } from "./genre/genre";
 
 @Entity()
-export class MovieEntity {
+export class Movie {
 
   @PrimaryGeneratedColumn()
   id: number;
@@ -11,20 +11,20 @@ export class MovieEntity {
   @Column()
   title: string;
 
-  @Column()
+  @Column({nullable: true})
   releasedAt: Date;
 
   @Column()
   tagLine: string;
 
-  @OneToMany(() => RoleEntity, (role) => role.movie, {eager: true})
-  roles: RoleEntity[];
+  @OneToMany(() => Role, (role) => role.movie, {eager: true})
+  roles: Role[];
 
   @Column()
   posterUrl: string;
 
-  @OneToMany(() => GenreEntity, (genre) => genre.movie, {eager: true})
-  genres: GenreEntity[];
+  @OneToMany(() => Genre, (genre) => genre.movie, {eager: true})
+  genres: Genre[];
 
   @Column()
   link: string;
@@ -33,5 +33,5 @@ export class MovieEntity {
   status: "released" | "upcoming" | "to-develop";
 
   @Column()
-  isPublic: boolean;
+  isPublic: 1 | 0;
 }

@@ -1,8 +1,8 @@
 import { HttpException, HttpStatus, Injectable, Logger } from "@nestjs/common";
 import { EntityManager } from "typeorm";
-import { MovieEntity } from "./movie.entity";
-import { RoleEntity } from "./role/role.entity";
-import { GenreEntity } from "./genre/genre.entity";
+import { Movie } from "./movie";
+import { Role } from "./role/role";
+import { Genre } from "./genre/genre";
 import { MovieDto } from "./dto/movie.dto";
 import { RoleDto } from "./dto/role.dto";
 import { GenreDto } from "./dto/genre.dto";
@@ -16,28 +16,28 @@ export class MovieService {
 
   async create(item: MovieDto): Promise<MovieDto> {
 
-    const entity: MovieEntity = new MovieEntity();
+    const entity: Movie = new Movie();
     entity.title = item.title;
-    entity.releasedAt = item.releasedAt;
+    entity.releasedAt = item.releasedAt ? item.releasedAt : null;
     entity.tagLine = item.tagLine;
     entity.roles = item.roles;
     entity.posterUrl = item.posterUrl;
     entity.genres = item.genres;
     entity.link = item.link;
     entity.status = item.status;
-    entity.isPublic = true;
+    entity.isPublic = 1;
     return await this.entityManager.save(entity);
   }
 
   async update(id: number, item: MovieDto): Promise<MovieDto> {
 
-    const entity: MovieEntity = await this.entityManager.findOneBy(MovieEntity, { id });
+    const entity: Movie = await this.entityManager.findOneBy(Movie, { id });
     if (!entity) {
       throw new HttpException(`Sorry, movie doesn't exist.`, HttpStatus.BAD_REQUEST,);
     }
 
     entity.title = item.title;
-    entity.releasedAt = item.releasedAt;
+    entity.releasedAt = item.releasedAt ? item.releasedAt : null;
     entity.tagLine = item.tagLine;
     entity.roles = item.roles;
     entity.posterUrl = item.posterUrl;
@@ -56,9 +56,9 @@ export class MovieService {
     }
   }
 
-  async changePublicity(id: number, isPublic: boolean): Promise<MovieDto> {
+  async changePublicity(id: number, isPublic: 1 | 0): Promise<MovieDto> {
 
-    const entity: MovieEntity = await this.entityManager.findOneBy(MovieEntity, { id });
+    const entity: Movie = await this.entityManager.findOneBy(Movie, { id });
     if (!entity) {
       throw new HttpException(`Sorry, movie doesn't exist.`, HttpStatus.BAD_REQUEST);
     }
@@ -76,18 +76,18 @@ export class MovieService {
   }
 
   async get(id: number): Promise<MovieDto> {
-    return await this.entityManager.findOneBy(MovieEntity, {id: id});
+    return await this.entityManager.findOneBy(Movie, {id: id});
   }
 
   async getAllGenres(): Promise<GenreDto[]> {
-    return await this.entityManager.find(GenreEntity);
+    return await this.entityManager.find(Genre);
   }
 
   async getAllRoles(): Promise<RoleDto[]> {
-    return await this.entityManager.find(RoleEntity);
+    return await this.entityManager.find(Role);
   }
 
   async getAllMovies(): Promise<MovieDto[]> {
-    return await this.entityManager.find(MovieEntity);
+    return await this.entityManager.find(Movie);
   }
 }
