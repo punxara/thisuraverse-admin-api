@@ -22,8 +22,8 @@ export class MovieController {
     return await this.service.update(id, item);
   }
 
-  @Patch("change-publicity/:id")
-  async changePublicity(@Param("id") id: number, @Body() isPublic: 1 | 0): Promise<Movie> {
+  @Put("change-publicity/:id")
+  async changePublicity(@Param("id") id: number, @Body() isPublic: {}): Promise<Movie> {
     return await this.service.changePublicity(id, isPublic);
   }
 

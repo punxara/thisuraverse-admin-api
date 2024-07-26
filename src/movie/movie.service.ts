@@ -56,14 +56,15 @@ export class MovieService {
     }
   }
 
-  async changePublicity(id: number, isPublic: 1 | 0): Promise<MovieDto> {
+  async changePublicity(id: number, isPublic: {}): Promise<MovieDto> {
 
     const entity: Movie = await this.entityManager.findOneBy(Movie, { id });
     if (!entity) {
       throw new HttpException(`Sorry, movie doesn't exist.`, HttpStatus.BAD_REQUEST);
     }
 
-    entity.isPublic = isPublic;
+    console.log(isPublic['isPublic']);
+    // entity.isPublic = +isPublic['isPublic'];
 
     try {
       return await this.entityManager.transaction(async transactionalEntityManager => {
