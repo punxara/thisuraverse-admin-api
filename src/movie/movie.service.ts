@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable, Logger } from "@nestjs/common";
+import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { EntityManager } from "typeorm";
 import { Movie } from "./movie";
 import { Role } from "./role/role";
@@ -63,12 +63,10 @@ export class MovieService {
       throw new HttpException(`Sorry, movie doesn't exist.`, HttpStatus.BAD_REQUEST);
     }
 
-    console.log(+isPublic['isPublic']);
-
-    if (isPublic['isPublic'] === '0'){
-      entity.isPublic = 0;
-    } else if (isPublic['isPublic'] === '1') {
+    if (isPublic['isPublic'] === 0){
       entity.isPublic = 1;
+    } else if (isPublic['isPublic'] === 1) {
+      entity.isPublic = 0;
     }
 
     try {
@@ -94,6 +92,12 @@ export class MovieService {
   }
 
   async getAllMovies(): Promise<MovieDto[]> {
-    return await this.entityManager.find(Movie);
+    return await this.entityManager.find(Movie, {
+      order: {
+        status: {
+          direction : "DESC"
+        }
+      },
+    });
   }
 }
