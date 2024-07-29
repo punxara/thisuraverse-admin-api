@@ -10,19 +10,6 @@ import {Role} from "./movie/role/role";
 import {Genre} from "./movie/genre/genre";
 
 @Module({
-    // imports: [
-    //   TypeOrmModule.forRoot({
-    //     type: "postgres",
-    //     host: "master-db-thisuraverse-data.e.aivencloud.com",
-    //     port: 22354,
-    //     username: "avnadmin",
-    //     password: "AVNS_QfLkMeWjVrWL9Ma6VIr",
-    //     database: "defaultdb",
-    //     entities: [Movie, Social, Role, Genre],
-    //     synchronize: true,
-    //     logging: false,
-    //     ssl: true,
-    //   }),
     imports: [
         TypeOrmModule.forRoot({
             type: "postgres",
