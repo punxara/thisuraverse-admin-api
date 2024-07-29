@@ -26,7 +26,7 @@ import {Genre} from "./movie/genre/genre";
     imports: [
         TypeOrmModule.forRoot({
             type: "postgres",
-            host: "172.20.10.12",
+            host: "192.168.40.135",
             port: 5432,
             username: "postgres",
             password: "123",
