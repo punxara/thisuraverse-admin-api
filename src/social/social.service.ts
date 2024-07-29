@@ -1,6 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { EntityManager } from "typeorm";
-import { SocialEntity } from "./social.entity";
+import { Social } from "./social";
+import { SocialDto } from "./dto/social.dto";
 
 @Injectable()
 export class SocialService {
@@ -9,21 +10,19 @@ export class SocialService {
     private entityManager: EntityManager,
   ) {}
 
-  async create(item: SocialEntity): Promise<SocialEntity> {
+  async create(item: Social): Promise<SocialDto> {
 
-    const entity: SocialEntity = new SocialEntity();
+    const entity: Social = new Social();
     entity.platform = item.platform;
     entity.username = item.username;
     entity.link = item.link;
-    entity.isPublic = item.isPublic;
-    entity.link = item.link;
-    entity.isPublic = item.isPublic;
+    entity.isPublic = 1;
     return await this.entityManager.save(entity);
   }
 
-  async update(id: number, item: SocialEntity): Promise<SocialEntity> {
+  async update(id: number, item: Social): Promise<SocialDto> {
 
-    const entity: SocialEntity = await this.entityManager.findOneBy(SocialEntity, { id });
+    const entity: Social = await this.entityManager.findOneBy(Social, { id });
     if (!entity) {
       throw new HttpException(`Sorry, movie doesn't exist.`, HttpStatus.BAD_REQUEST,);
     }
@@ -43,15 +42,18 @@ export class SocialService {
     }
   }
 
-  async changePublicity(id: number, isPublic: boolean): Promise<SocialEntity> {
+  async changePublicity(id: number, isPublic: {}): Promise<SocialDto> {
 
-    const entity: SocialEntity = await this.entityManager.findOneBy(SocialEntity, { id });
+    const entity: Social = await this.entityManager.findOneBy(Social, { id });
     if (!entity) {
       throw new HttpException(`Sorry, movie doesn't exist.`, HttpStatus.BAD_REQUEST);
     }
 
-    entity.isPublic = isPublic;
-
+    if (isPublic['isPublic'] === 0){
+      entity.isPublic = 1;
+    } else if (isPublic['isPublic'] === 1) {
+      entity.isPublic = 0;
+    }
     try {
       return await this.entityManager.transaction(async transactionalEntityManager => {
           return await transactionalEntityManager.save(entity);
@@ -62,7 +64,11 @@ export class SocialService {
     }
   }
 
-  async getAll(): Promise<SocialEntity[]> {
-    return await this.entityManager.find(SocialEntity);
+  async get(id: number): Promise<SocialDto> {
+    return await this.entityManager.findOneBy(Social, {id: id});
+  }
+
+  async getAll(): Promise<SocialDto[]> {
+    return await this.entityManager.find(Social);
   }
 }

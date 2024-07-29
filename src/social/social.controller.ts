@@ -1,6 +1,6 @@
-import { Body, Controller, Get, Param, Patch, Post, Put } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, Put } from "@nestjs/common";
 import { SocialService } from "./social.service";
-import { SocialEntity } from "./social.entity";
+import { Social } from "./social";
 
 @Controller("social")
 export class SocialController {
@@ -11,22 +11,27 @@ export class SocialController {
   }
 
   @Post()
-  create(@Body() item: SocialEntity): Promise<SocialEntity> {
+  create(@Body() item: Social): Promise<Social> {
     return this.service.create(item);
   }
 
   @Put(":id")
-  async update(@Param("id") id: number, @Body() item: SocialEntity): Promise<SocialEntity> {
+  async update(@Param("id") id: number, @Body() item: Social): Promise<Social> {
     return await this.service.update(id, item);
   }
 
-  @Patch(":id")
-  async changePublicity(@Param("id") id: number, @Body() isPublic: boolean): Promise<SocialEntity> {
+  @Put("change-publicity/:id")
+  async changePublicity(@Param("id") id: number, @Body() isPublic: {}): Promise<Social> {
     return await this.service.changePublicity(id, isPublic);
   }
 
-  @Get()
-  getAll(): Promise<SocialEntity[]> {
+  @Get('get-by-id/:id')
+  async get(@Param('id') id: string): Promise<Social> {
+    return await this.service.get(+id);
+  }
+
+  @Get('get-all-socials')
+  getAll(): Promise<Social[]> {
     return this.service.getAll();
   }
 }

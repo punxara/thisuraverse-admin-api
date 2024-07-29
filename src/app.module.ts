@@ -5,7 +5,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { MovieModule } from './movie/movie.module';
 import { SocialModule } from './social/social.module';
 import { Movie } from "./movie/movie";
-import { SocialEntity } from "./social/social.entity";
+import { Social } from "./social/social";
 import { Role } from "./movie/role/role";
 import { Genre } from "./movie/genre/genre";
 
@@ -18,7 +18,7 @@ import { Genre } from "./movie/genre/genre";
       username: "postgres",
       password: "123",
       database: "thisuraverse-master-db",
-      entities: [Movie, SocialEntity, Role, Genre],
+      entities: [Movie, Social, Role, Genre],
       synchronize: true,
       logging: false
     }),

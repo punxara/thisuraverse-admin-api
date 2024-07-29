@@ -1,7 +1,7 @@
-import { SocialEntity } from './social.entity';
+import { Social } from './social';
 
 describe('Social', () => {
   it('should be defined', () => {
-    expect(new SocialEntity()).toBeDefined();
+    expect(new Social()).toBeDefined();
   });
 });

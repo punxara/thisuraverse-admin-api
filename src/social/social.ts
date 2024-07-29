@@ -1,7 +1,7 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
-export class SocialEntity {
+export class Social {
 
   @PrimaryGeneratedColumn()
   id: number;
@@ -16,5 +16,5 @@ export class SocialEntity {
   link: string;
 
   @Column()
-  isPublic: boolean;
+  isPublic: 1 | 0;
 }
