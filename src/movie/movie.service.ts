@@ -80,7 +80,7 @@ export class MovieService {
   }
 
   async get(id: number): Promise<MovieDto> {
-    return await this.entityManager.findOneBy(Movie, {id: id});
+    return await this.entityManager.findOne(Movie, {where: {id: id}, relations: ["roles", "genres"]});
   }
 
   async getAllGenres(): Promise<GenreDto[]> {

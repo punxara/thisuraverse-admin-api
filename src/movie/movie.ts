@@ -1,4 +1,4 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import {Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn} from "typeorm";
 import { Role } from "./role/role";
 import { Genre } from "./genre/genre";
 
@@ -17,13 +17,15 @@ export class Movie {
   @Column()
   tagLine: string;
 
-  @OneToMany(() => Role, (role) => role.movie, {eager: true})
+  @ManyToMany(() => Role)
+  @JoinTable()
   roles: Role[];
 
   @Column()
   posterUrl: string;
 
-  @OneToMany(() => Genre, (genre) => genre.movie, {eager: true})
+  @ManyToMany(() => Genre)
+  @JoinTable()
   genres: Genre[];
 
   @Column()
